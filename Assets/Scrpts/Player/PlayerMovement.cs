@@ -1,6 +1,7 @@
 using UnityEngine;
 using UnityEngine.InputSystem;
 
+[RequireComponent(typeof(CharacterController), typeof(PlayerInput))]
 public class PlayerMovement : MonoBehaviour
 {
     [SerializeField] private Animator animator;
@@ -37,12 +38,10 @@ public class PlayerMovement : MonoBehaviour
         if (context.performed)
         {
             playerSpeed = sprintSpeed;
-            animator.SetBool("IsSprinting", true);
         }
-        else
+        else if (context.canceled)
         {
             playerSpeed = moveSpeed;
-            animator.SetBool("IsSprinting", false);
         }
     }
 
@@ -60,10 +59,13 @@ public class PlayerMovement : MonoBehaviour
         if (moveInput.magnitude > 0.1f)
         {
             animator.SetBool("IsMoving", true);
+            // Only show sprinting animation if player is actually moving AND sprinting
+            animator.SetBool("IsSprinting", playerSpeed == sprintSpeed);
         }
         else
         {
             animator.SetBool("IsMoving", false);
+            animator.SetBool("IsSprinting", false); // Turn off sprinting animation when not moving
         }
     }
 
