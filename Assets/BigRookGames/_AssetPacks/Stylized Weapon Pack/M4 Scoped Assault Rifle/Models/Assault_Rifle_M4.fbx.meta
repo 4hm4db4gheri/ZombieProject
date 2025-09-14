@@ -1,14 +1,23 @@
 fileFormatVersion: 2
 guid: d0de870e1e071ff4e841c05aeec60610
+AssetOrigin:
+  serializedVersion: 1
+  productId: 178197
+  packageName: Stylized M4 Assault Rifle with Scope Complete Kit with Gunshot VFX
+    and Sound - Hand Painted AR Machine Gun Automatic Rifle
+  packageVersion: 1.1
+  assetPath: Assets/BigRookGames/_AssetPacks/Stylized Weapon Pack/M4 Scoped Assault
+    Rifle/Models/Assault_Rifle_M4.fbx
+  uploadId: 389070
 ModelImporter:
-  serializedVersion: 20101
+  serializedVersion: 22200
   internalIDToNameTable: []
   externalObjects:
   - first:
       type: UnityEngine:Material
       assembly: UnityEngine.CoreModule
       name: Assault_Rifle_m__rifle_dif_01b_png
-    second: {fileID: 2100000, guid: ecadab033c77cf94faf5683e30160117, type: 2}
+    second: {fileID: 2100000, guid: bdb4a882247ee2e4eb957e6fad9647b6, type: 2}
   materials:
     materialImportMode: 1
     materialName: 0
@@ -19,9 +28,8 @@ ModelImporter:
     bakeSimulation: 0
     resampleCurves: 1
     optimizeGameObjects: 0
+    removeConstantScaleCurves: 0
     motionNodeName: 
-    rigImportErrors: 
-    rigImportWarnings: 
     animationImportErrors: 
     animationImportWarnings: 
     animationRetargetingWarnings: 
@@ -44,10 +52,12 @@ ModelImporter:
     addColliders: 0
     useSRGBMaterialColor: 1
     sortHierarchyByName: 1
+    importPhysicalCameras: 1
     importVisibility: 1
     importBlendShapes: 1
     importCameras: 1
     importLights: 1
+    nodeNameCollisionStrategy: 0
     fileIdsGeneration: 2
     swapUVChannels: 0
     generateSecondaryUV: 0
@@ -59,6 +69,7 @@ ModelImporter:
     skinWeightsMode: 0
     maxBonesPerVertex: 4
     minBoneWeight: 0.001
+    optimizeBones: 1
     meshOptimizationFlags: -1
     indexFormat: 0
     secondaryUVAngleDistortion: 8
@@ -69,6 +80,7 @@ ModelImporter:
     secondaryUVMinObjectScale: 1
     secondaryUVPackMargin: 4
     useFileScale: 0
+    strictVertexDataChecks: 0
   tangentSpace:
     normalSmoothAngle: 60
     normalImportMode: 0
@@ -100,16 +112,10 @@ ModelImporter:
   animationType: 2
   humanoidOversampling: 1
   avatarSetup: 0
+  addHumanoidExtraRootOnlyWhenUsingAvatar: 0
+  importBlendShapeDeformPercent: 0
+  remapMaterialsIfMaterialImportModeIsNone: 1
   additionalBone: 0
   userData: 
   assetBundleName: 
   assetBundleVariant: 
-AssetOrigin:
-  serializedVersion: 1
-  productId: 178197
-  packageName: Stylized M4 Assault Rifle with Scope Complete Kit with Gunshot VFX
-    and Sound - Hand Painted AR Machine Gun Automatic Rifle
-  packageVersion: 1.1
-  assetPath: Assets/BigRookGames/_AssetPacks/Stylized Weapon Pack/M4 Scoped Assault
-    Rifle/Models/Assault_Rifle_M4.fbx
-  uploadId: 389070
