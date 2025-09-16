@@ -1,11 +1,13 @@
 using UnityEngine;
 using UnityEngine.InputSystem;
 
-[RequireComponent(typeof(CharacterController), typeof(PlayerInput))]
-public class PlayerMovement : MonoBehaviour
+[RequireComponent(typeof(CharacterController))]
+public class PlayerMovementController : MonoBehaviour
 {
     [SerializeField] private Animator animator;
     [SerializeField] private Transform playerModel;
+    [SerializeField] private InputHandler _input;
+
     [Header("Movement Settings")]
     [SerializeField] private float moveSpeed = 5f;
     [SerializeField] private float sprintSpeed = 10f;
@@ -13,12 +15,12 @@ public class PlayerMovement : MonoBehaviour
     [SerializeField] private float jumpHeight = 2f;
     [SerializeField] private float gravity = -9.81f;
     [SerializeField] private float weight = 1f;
+
     [Header("Camera Settings")]
     [SerializeField] private Transform mainCamera;
     [SerializeField] private float _turnSmoothTime = 0.1f;
     private float turnSmoothVelocity;
 
-    private Vector2 moveInput;
     private CharacterController characterController;
     private Vector3 velocity;
     private bool isGrounded;
@@ -29,34 +31,32 @@ public class PlayerMovement : MonoBehaviour
         playerSpeed = moveSpeed; // Initialize playerSpeed to default move speed
     }
 
-    public void OnMove(InputAction.CallbackContext context)
+    private void HandleInput()
     {
-        moveInput = context.ReadValue<Vector2>();
-    }
-    public void OnSprint(InputAction.CallbackContext context)
-    {
-        if (context.performed)
+        // Handle sprint input
+        if (_input != null)
         {
-            playerSpeed = sprintSpeed;
-        }
-        else if (context.canceled)
-        {
-            playerSpeed = moveSpeed;
-        }
-    }
+            if (_input.sprint)
+            {
+                playerSpeed = sprintSpeed;
+            }
+            else
+            {
+                playerSpeed = moveSpeed;
+            }
 
-    public void OnJump(InputAction.CallbackContext context)
-    {
-        if (context.performed && isGrounded)
-        {
-            velocity.y = Mathf.Sqrt(jumpHeight * -2f * gravity);
-            animator.SetTrigger("Jump");
+            // Handle jump input
+            if (_input.jump && isGrounded)
+            {
+                velocity.y = Mathf.Sqrt(jumpHeight * -2f * gravity);
+                animator.SetTrigger("Jump");
+            }
         }
     }
 
     private void HandleMovementAnimation()
     {
-        if (moveInput.magnitude > 0.1f)
+        if (_input != null && _input.move.magnitude > 0.1f)
         {
             animator.SetBool("IsMoving", true);
             // Only show sprinting animation if player is actually moving AND sprinting
@@ -84,6 +84,7 @@ public class PlayerMovement : MonoBehaviour
         Vector3 cameraRightXZ = new Vector3(mainCamera.right.x, 0, mainCamera.right.z).normalized;
 
         // Calculate movement direction relative to camera
+        Vector2 moveInput = _input != null ? _input.move : Vector2.zero;
         Vector3 moveDirection = cameraForwardXZ * moveInput.y + cameraRightXZ * moveInput.x;
 
         // Only rotate player if there's movement input
@@ -104,6 +105,7 @@ public class PlayerMovement : MonoBehaviour
 
     private void Update()
     {
+        HandleInput();
         HandleMovement();
         HandleMovementAnimation();
     }
