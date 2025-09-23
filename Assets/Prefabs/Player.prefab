@@ -97,8 +97,8 @@ GameObject:
   m_Component:
   - component: {fileID: 2101702396466438663}
   - component: {fileID: 2028783654057523994}
-  - component: {fileID: 5344751701016032258}
   - component: {fileID: 1603480782432646143}
+  - component: {fileID: 5344751701016032258}
   - component: {fileID: 2674814894106225530}
   m_Layer: 0
   m_Name: Player
@@ -149,28 +149,6 @@ CharacterController:
   m_SkinWidth: 0.08
   m_MinMoveDistance: 0.001
   m_Center: {x: 0, y: 0.88, z: 0}
---- !u!114 &5344751701016032258
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1988177613985796587}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 5775b71dce09c524e8051a71ff39b828, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  animator: {fileID: 2577646020661848838}
-  playerModel: {fileID: 8441311073914745212}
-  _input: {fileID: 0}
-  moveSpeed: 5
-  sprintSpeed: 10
-  jumpHeight: 2
-  gravity: -9.81
-  weight: 1
-  mainCamera: {fileID: 0}
-  _turnSmoothTime: 0.1
 --- !u!114 &1603480782432646143
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -217,6 +195,28 @@ MonoBehaviour:
   m_DefaultActionMap: Player
   m_SplitScreenIndex: -1
   m_Camera: {fileID: 0}
+--- !u!114 &5344751701016032258
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1988177613985796587}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5775b71dce09c524e8051a71ff39b828, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  animator: {fileID: 2577646020661848838}
+  playerModel: {fileID: 8441311073914745212}
+  _input: {fileID: 0}
+  moveSpeed: 5
+  sprintSpeed: 10
+  jumpHeight: 2
+  gravity: -9.81
+  weight: 1
+  mainCamera: {fileID: 0}
+  _turnSmoothTime: 0.1
 --- !u!114 &2674814894106225530
 MonoBehaviour:
   m_ObjectHideFlags: 0

@@ -29,8 +29,10 @@ public class CameraController : MonoBehaviour
     private float _cinemachineTargetPitch;
 
     [Header("Camera Sensetivity")]
-    [SerializeField] private float _horizontalSensetivity = 10.0f;
-    [SerializeField] private float _verticalSensetivity = 10.0f;
+    [SerializeField] private float _horizontalSensetivity = 2f;
+    [SerializeField] private float _verticalSensetivity = 2f;
+    [SerializeField] private float _aimHorizontalSensetivity = 0.5f;
+    [SerializeField] private float _aimVerticalSensetivity = 0.5f;
 
     [Header("Input System")]
 #if ENABLE_INPUT_SYSTEM
@@ -54,6 +56,11 @@ public class CameraController : MonoBehaviour
     {
         InitializeCamera();
         SetupInputSystem();
+    }
+
+    private void Update()
+    {
+        CameraAim();
     }
 
     private void LateUpdate()
@@ -80,23 +87,20 @@ public class CameraController : MonoBehaviour
     }
     #endregion
 
-    #region Input Events
-    public void OnAim(InputAction.CallbackContext context)
+    #region Camera 
+    private void CameraAim()
     {
-        if (context.performed)
+        if (_input.aim)
         {
-            thirdPersonCamera.Priority = 0;
             aimCamera.Priority = 1;
+            thirdPersonCamera.Priority = 0;
         }
-        else if (context.canceled)
+        else
         {
-            thirdPersonCamera.Priority = 1;
             aimCamera.Priority = 0;
+            thirdPersonCamera.Priority = 1;
         }
     }
-    #endregion
-
-    #region Camera Rotation
     private void CameraRotation()
     {
         // if there is an input and camera position is not fixed
@@ -105,8 +109,8 @@ public class CameraController : MonoBehaviour
             //Don't multiply mouse input by Time.deltaTime;
             float deltaTimeMultiplier = IsCurrentDeviceMouse ? 1.0f : Time.deltaTime;
 
-            _cinemachineTargetYaw += _input.look.x * deltaTimeMultiplier * _horizontalSensetivity;
-            _cinemachineTargetPitch += _input.look.y * deltaTimeMultiplier * _verticalSensetivity;
+            _cinemachineTargetYaw += _input.look.x * deltaTimeMultiplier * (_input.aim ? _aimHorizontalSensetivity : _horizontalSensetivity);
+            _cinemachineTargetPitch += _input.look.y * deltaTimeMultiplier * (_input.aim ? _aimVerticalSensetivity : _verticalSensetivity);
         }
 
         // clamp our rotations so our values are limited 360 degrees
