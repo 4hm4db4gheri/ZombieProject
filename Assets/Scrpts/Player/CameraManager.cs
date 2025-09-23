@@ -28,6 +28,10 @@ public class CameraController : MonoBehaviour
     private float _cinemachineTargetYaw;
     private float _cinemachineTargetPitch;
 
+    [Header("Camera Sensetivity")]
+    [SerializeField] private float _horizontalSensetivity = 10.0f;
+    [SerializeField] private float _verticalSensetivity = 10.0f;
+
     [Header("Input System")]
 #if ENABLE_INPUT_SYSTEM
     private PlayerInput _playerInput;
@@ -101,8 +105,8 @@ public class CameraController : MonoBehaviour
             //Don't multiply mouse input by Time.deltaTime;
             float deltaTimeMultiplier = IsCurrentDeviceMouse ? 1.0f : Time.deltaTime;
 
-            _cinemachineTargetYaw += _input.look.x * deltaTimeMultiplier;
-            _cinemachineTargetPitch += _input.look.y * deltaTimeMultiplier;
+            _cinemachineTargetYaw += _input.look.x * deltaTimeMultiplier * _horizontalSensetivity;
+            _cinemachineTargetPitch += _input.look.y * deltaTimeMultiplier * _verticalSensetivity;
         }
 
         // clamp our rotations so our values are limited 360 degrees
