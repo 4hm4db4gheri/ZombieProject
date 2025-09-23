@@ -1,6 +1,7 @@
 using System;
 using Unity.Cinemachine;
 using UnityEngine;
+using UnityEngine.Animations.Rigging;
 using UnityEngine.InputSystem;
 
 public class CameraController : MonoBehaviour
@@ -13,7 +14,8 @@ public class CameraController : MonoBehaviour
     [SerializeField] private Transform cameraFollowTransform;
 
     [Header("Input")]
-    [SerializeField] private InputHandler _input;
+    [SerializeField] private InputHandler _inputHandler;
+    [SerializeField] private Rig _aimRig;
 
     [Header("Camera Rotation Settings")]
     [Tooltip("How far in degrees can you move the camera up")]
@@ -33,12 +35,11 @@ public class CameraController : MonoBehaviour
     [SerializeField] private float _verticalSensetivity = 2f;
     [SerializeField] private float _aimHorizontalSensetivity = 0.5f;
     [SerializeField] private float _aimVerticalSensetivity = 0.5f;
-
+    [SerializeField] private float _aimRigSpeed = 10f;
     [Header("Input System")]
 #if ENABLE_INPUT_SYSTEM
     private PlayerInput _playerInput;
 #endif
-
     private bool IsCurrentDeviceMouse
     {
         get
@@ -90,27 +91,31 @@ public class CameraController : MonoBehaviour
     #region Camera 
     private void CameraAim()
     {
-        if (_input.aim)
+        if (_inputHandler.aim)
         {
             aimCamera.Priority = 1;
             thirdPersonCamera.Priority = 0;
+
+            _aimRig.weight = Mathf.Lerp(_aimRig.weight, 1f, Time.deltaTime * _aimRigSpeed);
         }
         else
         {
             aimCamera.Priority = 0;
             thirdPersonCamera.Priority = 1;
+
+            _aimRig.weight = Mathf.Lerp(_aimRig.weight, 0f, Time.deltaTime * _aimRigSpeed);
         }
     }
     private void CameraRotation()
     {
         // if there is an input and camera position is not fixed
-        if (_input.look.sqrMagnitude >= _threshold)
+        if (_inputHandler.look.sqrMagnitude >= _threshold)
         {
             //Don't multiply mouse input by Time.deltaTime;
             float deltaTimeMultiplier = IsCurrentDeviceMouse ? 1.0f : Time.deltaTime;
 
-            _cinemachineTargetYaw += _input.look.x * deltaTimeMultiplier * (_input.aim ? _aimHorizontalSensetivity : _horizontalSensetivity);
-            _cinemachineTargetPitch += _input.look.y * deltaTimeMultiplier * (_input.aim ? _aimVerticalSensetivity : _verticalSensetivity);
+            _cinemachineTargetYaw += _inputHandler.look.x * deltaTimeMultiplier * (_inputHandler.aim ? _aimHorizontalSensetivity : _horizontalSensetivity);
+            _cinemachineTargetPitch += _inputHandler.look.y * deltaTimeMultiplier * (_inputHandler.aim ? _aimVerticalSensetivity : _verticalSensetivity);
         }
 
         // clamp our rotations so our values are limited 360 degrees
