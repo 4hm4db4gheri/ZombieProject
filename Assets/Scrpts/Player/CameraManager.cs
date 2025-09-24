@@ -16,7 +16,7 @@ public class CameraController : MonoBehaviour
     [Header("Input")]
     [SerializeField] private InputHandler _inputHandler;
     [SerializeField] private Rig _aimRig;
-
+    [SerializeField] private Animator _animator;
     [Header("Camera Rotation Settings")]
     [Tooltip("How far in degrees can you move the camera up")]
     [SerializeField] private float TopClamp = 70.0f;
@@ -97,6 +97,7 @@ public class CameraController : MonoBehaviour
             thirdPersonCamera.Priority = 0;
 
             _aimRig.weight = Mathf.Lerp(_aimRig.weight, 1f, Time.deltaTime * _aimRigSpeed);
+            _animator.SetBool("IsAiming", true);
         }
         else
         {
@@ -104,6 +105,7 @@ public class CameraController : MonoBehaviour
             thirdPersonCamera.Priority = 1;
 
             _aimRig.weight = Mathf.Lerp(_aimRig.weight, 0f, Time.deltaTime * _aimRigSpeed);
+            _animator.SetBool("IsAiming", false);
         }
     }
     private void CameraRotation()

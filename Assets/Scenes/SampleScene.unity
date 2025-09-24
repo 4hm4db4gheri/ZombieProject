@@ -793,6 +793,11 @@ MeshFilter:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1463497813}
   m_Mesh: {fileID: 10202, guid: 0000000000000000e000000000000000, type: 0}
+--- !u!95 &1543917327 stripped
+Animator:
+  m_CorrespondingSourceObject: {fileID: 2577646020661848838, guid: 46ed68ee161ef6b4abb80b61c9818bd5, type: 3}
+  m_PrefabInstance: {fileID: 2302001868590288366}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &1549798318 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 2735497045445999453, guid: dcdc3b04965c26b4397937d91abe0d6d, type: 3}
@@ -1016,7 +1021,7 @@ Transform:
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 14.253645, y: 14.253645, z: 14.253645}
+  m_LocalScale: {x: 2.230605, y: 2.230605, z: 2.230605}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
@@ -1304,6 +1309,10 @@ PrefabInstance:
       propertyPath: _aimRig
       value: 
       objectReference: {fileID: 453091262}
+    - target: {fileID: 8980876605774028266, guid: dcdc3b04965c26b4397937d91abe0d6d, type: 3}
+      propertyPath: _animator
+      value: 
+      objectReference: {fileID: 1543917327}
     - target: {fileID: 8980876605774028266, guid: dcdc3b04965c26b4397937d91abe0d6d, type: 3}
       propertyPath: _inputHandler
       value: 
