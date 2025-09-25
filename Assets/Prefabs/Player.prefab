@@ -67,8 +67,9 @@ GameObject:
   - component: {fileID: 2101702396466438663}
   - component: {fileID: 2028783654057523994}
   - component: {fileID: 1603480782432646143}
-  - component: {fileID: 5344751701016032258}
   - component: {fileID: 2674814894106225530}
+  - component: {fileID: 5344751701016032258}
+  - component: {fileID: 7415488707719869712}
   - component: {fileID: 74461073283064055}
   m_Layer: 0
   m_Name: Player
@@ -224,11 +225,48 @@ MonoBehaviour:
         m_CallState: 2
     m_ActionId: 57e6d4da-c74a-42de-a121-29c1703c4865
     m_ActionName: 'Player/Aim[/Mouse/rightButton]'
+  - m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 2674814894106225530}
+        m_TargetAssemblyTypeName: InputHandler, Assembly-CSharp
+        m_MethodName: OnShoot
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+    m_ActionId: da9dbdb1-dcd3-42df-a0f1-35e988c91757
+    m_ActionName: 'Player/Shoot[/Mouse/leftButton]'
   m_NeverAutoSwitchControlSchemes: 0
   m_DefaultControlScheme: 
   m_DefaultActionMap: Player
   m_SplitScreenIndex: -1
   m_Camera: {fileID: 0}
+--- !u!114 &2674814894106225530
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1988177613985796587}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: aae3f4393bc6a9847a67448fb755b090, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::InputHandler
+  move: {x: 0, y: 0}
+  look: {x: 0, y: 0}
+  jump: 0
+  sprint: 0
+  aim: 0
+  shoot: 0
+  analogMovement: 0
+  cursorLocked: 1
+  cursorInputForLook: 1
 --- !u!114 &5344751701016032258
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -251,7 +289,11 @@ MonoBehaviour:
   weight: 1
   mainCamera: {fileID: 0}
   _turnSmoothTime: 0.1
---- !u!114 &2674814894106225530
+  _aimRotationSpeed: 5
+  _mousePosition3D: {fileID: 0}
+  _shootingRotationSpeed: 8
+  _playerShooting: {fileID: 7415488707719869712}
+--- !u!114 &7415488707719869712
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -260,17 +302,17 @@ MonoBehaviour:
   m_GameObject: {fileID: 1988177613985796587}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: aae3f4393bc6a9847a67448fb755b090, type: 3}
+  m_Script: {fileID: 11500000, guid: b247c89c364421d4a88c944c8d1e807d, type: 3}
   m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::InputHandler
-  move: {x: 0, y: 0}
-  look: {x: 0, y: 0}
-  jump: 0
-  sprint: 0
-  aim: 0
-  analogMovement: 0
-  cursorLocked: 1
-  cursorInputForLook: 1
+  m_EditorClassIdentifier: Assembly-CSharp::PlayerShooting
+  _input: {fileID: 2674814894106225530}
+  _mainCamera: {fileID: 0}
+  _maxShootDistance: 1000
+  _hitLayerMask:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  _gunDamage: 10
+  _fireRate: 1
 --- !u!95 &74461073283064055
 Animator:
   serializedVersion: 7
@@ -293,6 +335,37 @@ Animator:
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorStateOnDisable: 0
   m_WriteDefaultValuesOnDisable: 0
+--- !u!1 &2845364642701363112
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 2211670483829252325}
+  m_Layer: 0
+  m_Name: Gun Muzzle
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &2211670483829252325
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2845364642701363112}
+  serializedVersion: 2
+  m_LocalRotation: {x: -0.00000026822082, y: 0.7071067, z: 0.7071068, w: 0.00000039757018}
+  m_LocalPosition: {x: -2.547, y: -0, z: 0.361}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 8613216514589265512}
+  m_LocalEulerAnglesHint: {x: -90, y: 360, z: -180}
 --- !u!1 &3597073824783113484
 GameObject:
   m_ObjectHideFlags: 0
@@ -822,7 +895,10 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
-    m_AddedGameObjects: []
+    m_AddedGameObjects:
+    - targetCorrespondingSourceObject: {fileID: -8679921383154817045, guid: d0de870e1e071ff4e841c05aeec60610, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 2211670483829252325}
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: d0de870e1e071ff4e841c05aeec60610, type: 3}
 --- !u!4 &8613216514589265512 stripped

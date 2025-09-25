@@ -25,6 +25,10 @@ public class PlayerMovementController : MonoBehaviour
     [SerializeField] private float _aimRotationSpeed = 5f;
     [SerializeField] private MousePosition3D _mousePosition3D;
 
+    [Header("Shooting Rotation Settings")]
+    [SerializeField] private float _shootingRotationSpeed = 8f;
+    [SerializeField] private PlayerShooting _playerShooting;
+
     private CharacterController characterController;
     private Vector3 velocity;
     private bool isGrounded;
@@ -60,8 +64,28 @@ public class PlayerMovementController : MonoBehaviour
 
     private void HandlePlayerRotation(Vector3 moveDirection)
     {
-        // If aiming, rotate player to face the aim direction
-        if (_input != null && _input.aim && _mousePosition3D != null)
+        // Priority 1: If shooting, rotate to face shooting direction
+        if (_input != null && _input.shoot && _playerShooting != null)
+        {
+            Vector3 shootingDirection = _playerShooting.GetShootingDirection();
+            if (shootingDirection != Vector3.zero)
+            {
+                // Flatten the shooting direction to XZ plane (ignore Y component)
+                Vector3 shootingDirectionXZ = new Vector3(shootingDirection.x, 0, shootingDirection.z).normalized;
+
+                if (shootingDirectionXZ.magnitude > 0.1f)
+                {
+                    // Calculate target rotation based on shooting direction
+                    float targetAngle = Mathf.Atan2(shootingDirectionXZ.x, shootingDirectionXZ.z) * Mathf.Rad2Deg;
+
+                    // Smoothly rotate towards the shooting direction using Lerp
+                    Quaternion targetRotation = Quaternion.Euler(0, targetAngle, 0);
+                    playerModel.rotation = Quaternion.Lerp(playerModel.rotation, targetRotation, _shootingRotationSpeed * Time.deltaTime);
+                }
+            }
+        }
+        // Priority 2: If aiming, rotate player to face the aim direction
+        else if (_input != null && _input.aim && _mousePosition3D != null)
         {
             Vector3 aimDirection = _mousePosition3D.GetAimDirection();
             // Flatten the aim direction to XZ plane (ignore Y component)
@@ -77,7 +101,7 @@ public class PlayerMovementController : MonoBehaviour
                 playerModel.rotation = Quaternion.Lerp(playerModel.rotation, targetRotation, _aimRotationSpeed * Time.deltaTime);
             }
         }
-        // If not aiming but moving, rotate based on movement direction
+        // Priority 3: If not aiming or shooting but moving, rotate based on movement direction
         else if (moveDirection.magnitude > 0.1f)
         {
             float targetAngle = Mathf.Atan2(moveDirection.x, moveDirection.z) * Mathf.Rad2Deg;

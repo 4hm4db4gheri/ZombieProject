@@ -171,12 +171,17 @@ MonoBehaviour:
   thirdPersonCamera: {fileID: 7391149218536801308}
   aimCamera: {fileID: 5491793363293040762}
   cameraFollowTransform: {fileID: 0}
-  _input: {fileID: 0}
+  _inputHandler: {fileID: 0}
+  _aimRig: {fileID: 0}
+  _animator: {fileID: 0}
   TopClamp: 70
   BottomClamp: -30
   CameraAngleOverride: 10
-  _horizontalSensetivity: 20
-  _verticalSensetivity: 20
+  _horizontalSensetivity: 100
+  _verticalSensetivity: 100
+  _aimHorizontalSensetivity: 50
+  _aimVerticalSensetivity: 50
+  _aimRigSpeed: 10
 --- !u!114 &6313450132705707683
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -218,6 +223,10 @@ MonoBehaviour:
       m_Calls: []
     m_ActionId: bc8d9df6-38eb-428f-9448-02948d21a10a
     m_ActionName: 'Player/Sprint[/Keyboard/shift]'
+  - m_PersistentCalls:
+      m_Calls: []
+    m_ActionId: 57e6d4da-c74a-42de-a121-29c1703c4865
+    m_ActionName: 'Player/Aim[/Mouse/rightButton]'
   m_NeverAutoSwitchControlSchemes: 0
   m_DefaultControlScheme: 
   m_DefaultActionMap: Player
@@ -251,7 +260,7 @@ Transform:
   m_GameObject: {fileID: 8254099616499537063}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -1.0171657, y: 3.09306, z: -12.959358}
+  m_LocalPosition: {x: -1.0171657, y: 2.96306, z: -13.589357}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -313,7 +322,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Unity.Cinemachine::Unity.Cinemachine.CinemachineThirdPersonFollow
   Damping: {x: 0.1, y: 0.25, z: 0.3}
-  ShoulderOffset: {x: 0.5, y: 0.25, z: 2.5}
+  ShoulderOffset: {x: 0.5, y: 0.12, z: 1.87}
   VerticalArmLength: 0
   CameraSide: 1
   CameraDistance: 4
