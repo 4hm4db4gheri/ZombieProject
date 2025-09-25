@@ -207,7 +207,7 @@ Transform:
   m_GameObject: {fileID: 330585543}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 2.9776545, y: 1.764, z: -2.6270375}
+  m_LocalPosition: {x: 2.9776545, y: 1.6340001, z: -2.6270375}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -506,6 +506,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::MousePosition3D
   _mainCamera: {fileID: 330585545}
+  _maxAimDistance: 1000
+  _aimLayerMask:
+    serializedVersion: 2
+    m_Bits: 4294967295
 --- !u!4 &954511254
 Transform:
   m_ObjectHideFlags: 0
@@ -1169,6 +1173,10 @@ PrefabInstance:
       propertyPath: mainCamera
       value: 
       objectReference: {fileID: 330585546}
+    - target: {fileID: 5344751701016032258, guid: 46ed68ee161ef6b4abb80b61c9818bd5, type: 3}
+      propertyPath: _mousePosition3D
+      value: 
+      objectReference: {fileID: 954511253}
     - target: {fileID: 8878789082926420571, guid: 46ed68ee161ef6b4abb80b61c9818bd5, type: 3}
       propertyPath: m_Data.m_SourceObjects.m_Item0.transform
       value: 
@@ -1189,6 +1197,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: aae3f4393bc6a9847a67448fb755b090, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::InputHandler
+--- !u!4 &2302001868590288373 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 2101702396466438663, guid: 46ed68ee161ef6b4abb80b61c9818bd5, type: 3}
+  m_PrefabInstance: {fileID: 2302001868590288366}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1001 &9150708037500974247
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -1197,6 +1210,10 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 257259040372133099, guid: dcdc3b04965c26b4397937d91abe0d6d, type: 3}
+      propertyPath: ShoulderOffset.y
+      value: 0.12
+      objectReference: {fileID: 0}
     - target: {fileID: 257259040372133099, guid: dcdc3b04965c26b4397937d91abe0d6d, type: 3}
       propertyPath: ShoulderOffset.z
       value: 1.87
@@ -1219,7 +1236,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5083011884910988812, guid: dcdc3b04965c26b4397937d91abe0d6d, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 3.09306
+      value: 2.96306
       objectReference: {fileID: 0}
     - target: {fileID: 5083011884910988812, guid: dcdc3b04965c26b4397937d91abe0d6d, type: 3}
       propertyPath: m_LocalPosition.z
@@ -1314,12 +1331,20 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 1543917327}
     - target: {fileID: 8980876605774028266, guid: dcdc3b04965c26b4397937d91abe0d6d, type: 3}
+      propertyPath: _playerBody
+      value: 
+      objectReference: {fileID: 2302001868590288373}
+    - target: {fileID: 8980876605774028266, guid: dcdc3b04965c26b4397937d91abe0d6d, type: 3}
       propertyPath: _inputHandler
       value: 
       objectReference: {fileID: 2302001868590288368}
     - target: {fileID: 8980876605774028266, guid: dcdc3b04965c26b4397937d91abe0d6d, type: 3}
+      propertyPath: _mousePosition3D
+      value: 
+      objectReference: {fileID: 954511253}
+    - target: {fileID: 8980876605774028266, guid: dcdc3b04965c26b4397937d91abe0d6d, type: 3}
       propertyPath: _verticalSensetivity
-      value: 2
+      value: 100
       objectReference: {fileID: 0}
     - target: {fileID: 8980876605774028266, guid: dcdc3b04965c26b4397937d91abe0d6d, type: 3}
       propertyPath: cameraFollowTransform
@@ -1327,11 +1352,11 @@ PrefabInstance:
       objectReference: {fileID: 1055846518}
     - target: {fileID: 8980876605774028266, guid: dcdc3b04965c26b4397937d91abe0d6d, type: 3}
       propertyPath: _horizontalSensetivity
-      value: 2
+      value: 100
       objectReference: {fileID: 0}
     - target: {fileID: 8980876605774028266, guid: dcdc3b04965c26b4397937d91abe0d6d, type: 3}
       propertyPath: _aimVerticalSensetivity
-      value: 0.5
+      value: 50
       objectReference: {fileID: 0}
     - target: {fileID: 8980876605774028266, guid: dcdc3b04965c26b4397937d91abe0d6d, type: 3}
       propertyPath: cinemachineCameraTarget
@@ -1339,7 +1364,7 @@ PrefabInstance:
       objectReference: {fileID: 1055846518}
     - target: {fileID: 8980876605774028266, guid: dcdc3b04965c26b4397937d91abe0d6d, type: 3}
       propertyPath: _aimHorizontalSensetivity
-      value: 0.5
+      value: 50
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []

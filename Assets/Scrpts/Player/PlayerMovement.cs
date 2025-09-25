@@ -21,6 +21,10 @@ public class PlayerMovementController : MonoBehaviour
     [SerializeField] private float _turnSmoothTime = 0.1f;
     private float turnSmoothVelocity;
 
+    [Header("Aim Rotation Settings")]
+    [SerializeField] private float _aimRotationSpeed = 5f;
+    [SerializeField] private MousePosition3D _mousePosition3D;
+
     private CharacterController characterController;
     private Vector3 velocity;
     private bool isGrounded;
@@ -51,6 +55,34 @@ public class PlayerMovementController : MonoBehaviour
                 velocity.y = Mathf.Sqrt(jumpHeight * -2f * gravity);
                 animator.SetTrigger("Jump");
             }
+        }
+    }
+
+    private void HandlePlayerRotation(Vector3 moveDirection)
+    {
+        // If aiming, rotate player to face the aim direction
+        if (_input != null && _input.aim && _mousePosition3D != null)
+        {
+            Vector3 aimDirection = _mousePosition3D.GetAimDirection();
+            // Flatten the aim direction to XZ plane (ignore Y component)
+            Vector3 aimDirectionXZ = new Vector3(aimDirection.x, 0, aimDirection.z).normalized;
+
+            if (aimDirectionXZ.magnitude > 0.1f)
+            {
+                // Calculate target rotation based on aim direction
+                float targetAngle = Mathf.Atan2(aimDirectionXZ.x, aimDirectionXZ.z) * Mathf.Rad2Deg;
+
+                // Smoothly rotate towards the aim direction using Lerp
+                Quaternion targetRotation = Quaternion.Euler(0, targetAngle, 0);
+                playerModel.rotation = Quaternion.Lerp(playerModel.rotation, targetRotation, _aimRotationSpeed * Time.deltaTime);
+            }
+        }
+        // If not aiming but moving, rotate based on movement direction
+        else if (moveDirection.magnitude > 0.1f)
+        {
+            float targetAngle = Mathf.Atan2(moveDirection.x, moveDirection.z) * Mathf.Rad2Deg;
+            float angle = Mathf.SmoothDampAngle(playerModel.eulerAngles.y, targetAngle, ref turnSmoothVelocity, _turnSmoothTime);
+            playerModel.rotation = Quaternion.Euler(0, angle, 0);
         }
     }
 
@@ -87,13 +119,8 @@ public class PlayerMovementController : MonoBehaviour
         Vector2 moveInput = _input != null ? _input.move : Vector2.zero;
         Vector3 moveDirection = cameraForwardXZ * moveInput.y + cameraRightXZ * moveInput.x;
 
-        // Only rotate player if there's movement input
-        if (moveDirection.magnitude > 0.1f)
-        {
-            float targetAngle = Mathf.Atan2(moveDirection.x, moveDirection.z) * Mathf.Rad2Deg;
-            float angle = Mathf.SmoothDampAngle(playerModel.eulerAngles.y, targetAngle, ref turnSmoothVelocity, _turnSmoothTime);
-            playerModel.rotation = Quaternion.Euler(0, angle, 0);
-        }
+        // Handle player rotation
+        HandlePlayerRotation(moveDirection);
 
         // Move the character
         characterController.Move(playerSpeed * Time.deltaTime * moveDirection);
