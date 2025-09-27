@@ -7,22 +7,66 @@ public class PlayerShooting : MonoBehaviour
     [SerializeField] private float _maxShootDistance = 1000f;
     [SerializeField] private LayerMask _hitLayerMask = -1;
     [SerializeField] private float _gunDamage = 10f;
-    [SerializeField] private float _fireRate = 0.1f; // Time between shots in seconds
+    [SerializeField] private float _fireRate = 10f; // Time between shots in seconds
+
+    [Header("Gunfire Controller")]
+    // --- Audio ---
+    [SerializeField] private AudioClip _gunShotClip;
+    [SerializeField] private AudioSource _source;
+    [SerializeField] private Vector2 _audioPitch = new Vector2(.9f, 1.1f);
+
+    // --- Muzzle ---
+    [SerializeField] private GameObject _muzzlePrefab;
+    [SerializeField] private GameObject _muzzlePosition;
+
 
     private float _lastShotTime = 0f;
     private Ray _lastRay; // Store the last ray for gizmo visualization
     private Vector3 _shootingDirection; // Store the current shooting direction
 
-    private void Shoot()
+    private void Start()
     {
-        // Check if enough time has passed since the last shot
-        if (Time.time - _lastShotTime < _fireRate)
+        if (_source != null) _source.clip = _gunShotClip;
+    }
+    private void ShootFX()
+    {
+        // --- Spawn muzzle flash ---
+        var flash = Instantiate(_muzzlePrefab, _muzzlePosition.transform);
+
+        // --- Handle Audio ---
+        if (_source != null)
         {
-            return; // Don't shoot if fire rate hasn't been met
+            // --- Sometimes the source is not attached to the weapon for easy instantiation on quick firing weapons like machineguns, 
+            // so that each shot gets its own audio source, but sometimes it's fine to use just 1 source. We don't want to instantiate 
+            // the parent gameobject or the program will get stuck in a loop, so we check to see if the source is a child object ---
+            if (_source.transform.IsChildOf(transform))
+            {
+                _source.Play();
+            }
+            else
+            {
+                // --- Instantiate prefab for audio, delete after a few seconds ---
+                AudioSource newAS = Instantiate(_source);
+                if ((newAS = Instantiate(_source)) != null && newAS.outputAudioMixerGroup != null && newAS.outputAudioMixerGroup.audioMixer != null)
+                {
+                    // --- Change pitch to give variation to repeated shots ---
+                    newAS.outputAudioMixerGroup.audioMixer.SetFloat("Pitch", Random.Range(_audioPitch.x, _audioPitch.y));
+                    newAS.pitch = Random.Range(_audioPitch.x, _audioPitch.y);
+
+                    // --- Play the gunshot sound ---
+                    newAS.PlayOneShot(_gunShotClip);
+
+                    // --- Remove after a few seconds. Test script only. When using in project I recommend using an object pool ---
+                    Destroy(newAS.gameObject, 4);
+                }
+            }
         }
 
-        _lastShotTime = Time.time; // Update the last shot time
+        // --- Insert custom code here to shoot projectile or hitscan from weapon ---
 
+    }
+    private void ShootHitscan()
+    {
         Ray ray = _mainCamera.ScreenPointToRay(Input.mousePosition);
         _lastRay = ray; // Store ray for gizmo visualization
         _shootingDirection = ray.direction; // Store shooting direction for player rotation
@@ -60,7 +104,20 @@ public class PlayerShooting : MonoBehaviour
             }
         }
     }
+    private void Shoot()
+    {
+        // Check if enough time has passed since the last shot
+        if (Time.time - _lastShotTime < 1f / _fireRate)
+        {
+            return; // Don't shoot if fire rate hasn't been met
+        }
 
+        ShootFX();
+
+        _lastShotTime = Time.time; // Update the last shot time
+
+        ShootHitscan();
+    }
 
     private void Update()
     {
