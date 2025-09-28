@@ -18,7 +18,6 @@ public class InputHandler : MonoBehaviour
     [Header("Mouse Cursor Settings")]
     public bool cursorLocked = true;
     public bool cursorInputForLook = true;
-
     // Unity Events for Player Input component
     public void OnMove(InputAction.CallbackContext context)
     {

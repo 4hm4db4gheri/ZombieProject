@@ -9,10 +9,11 @@
     }
   ],
   "dependencies": {
-    "com.github.asus4.onnxruntime": "0.4.2",
-    "com.github.asus4.onnxruntime.unity": "0.4.2",
-    "com.github.asus4.onnxruntime-extensions": "0.4.2",
     "com.boxqkrtm.ide.cursor": "https://github.com/boxqkrtm/com.unity.ide.cursor.git",
+    "com.genesis.sparktts.unity": "https://github.com/arghyasur1991/Spark-TTS-Unity.git",
+    "com.github.asus4.onnxruntime": "0.4.2",
+    "com.github.asus4.onnxruntime-extensions": "0.4.2",
+    "com.github.asus4.onnxruntime.unity": "0.4.2",
     "com.unity.ai.assistant": "1.0.0-pre.12",
     "com.unity.ai.generators": "1.0.0-pre.20",
     "com.unity.ai.inference": "2.3.0",
