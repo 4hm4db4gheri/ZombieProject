@@ -9,6 +9,31 @@
       },
       "hash": "38fecf55e4fd94ccfe58a92ed8ad1a529ba1694e"
     },
+    "com.genesis.sparktts.unity": {
+      "version": "file:/Unity projects/Zombie Project/Assets/Spark-TTS-Unity-main",
+      "depth": 0,
+      "source": "local",
+      "dependencies": {
+        "com.github.asus4.onnxruntime": "0.4.0",
+        "com.unity.nuget.newtonsoft-json": "3.2.1"
+      }
+    },
+    "com.github.asus4.onnxruntime": {
+      "version": "0.4.0",
+      "depth": 0,
+      "source": "registry",
+      "dependencies": {},
+      "url": "https://registry.npmjs.com"
+    },
+    "com.github.asus4.onnxruntime-extensions": {
+      "version": "0.4.0",
+      "depth": 0,
+      "source": "registry",
+      "dependencies": {
+        "com.github.asus4.onnxruntime": "0.4.0"
+      },
+      "url": "https://registry.npmjs.com"
+    },
     "com.unity.ai.assistant": {
       "version": "1.0.0-pre.12",
       "depth": 0,

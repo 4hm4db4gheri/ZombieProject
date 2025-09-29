@@ -10,6 +10,9 @@
   ],
   "dependencies": {
     "com.boxqkrtm.ide.cursor": "https://github.com/boxqkrtm/com.unity.ide.cursor.git",
+    "com.genesis.sparktts.unity": "file:/Unity projects/Zombie Project/Assets/Spark-TTS-Unity-main",
+    "com.github.asus4.onnxruntime": "0.4.0",
+    "com.github.asus4.onnxruntime-extensions": "0.4.0",
     "com.unity.ai.assistant": "1.0.0-pre.12",
     "com.unity.ai.generators": "1.0.0-pre.20",
     "com.unity.ai.inference": "2.3.0",
