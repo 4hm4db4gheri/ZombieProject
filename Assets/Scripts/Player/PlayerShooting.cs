@@ -28,6 +28,20 @@ public class PlayerShooting : MonoBehaviour
     {
         if (_source != null) _source.clip = _gunShotClip;
     }
+    private void Shoot()
+    {
+        // Check if enough time has passed since the last shot
+        if (Time.time - _lastShotTime < 1f / _fireRate)
+        {
+            return; // Don't shoot if fire rate hasn't been met
+        }
+
+        ShootFX();
+
+        _lastShotTime = Time.time; // Update the last shot time
+
+        ShootHitscan();
+    }
     private void ShootFX()
     {
         // --- Spawn muzzle flash ---
@@ -89,6 +103,9 @@ public class PlayerShooting : MonoBehaviour
                     if (damageable != null)
                     {
                         damageable.TakeDamage(_gunDamage, gameObject);
+
+                        
+                        
                     }
                 }
             }
@@ -104,21 +121,6 @@ public class PlayerShooting : MonoBehaviour
             }
         }
     }
-    private void Shoot()
-    {
-        // Check if enough time has passed since the last shot
-        if (Time.time - _lastShotTime < 1f / _fireRate)
-        {
-            return; // Don't shoot if fire rate hasn't been met
-        }
-
-        ShootFX();
-
-        _lastShotTime = Time.time; // Update the last shot time
-
-        ShootHitscan();
-    }
-
     private void Update()
     {
         // Always update shooting direction based on mouse position, even when not shooting
