@@ -45,7 +45,8 @@ public class CameraController : MonoBehaviour
         get
         {
 #if ENABLE_INPUT_SYSTEM
-            return _playerInput.currentControlScheme == "KeyboardMouse";
+            // Check if mouse is available and being used
+            return Mouse.current != null;
 #else
             return false;
 #endif
