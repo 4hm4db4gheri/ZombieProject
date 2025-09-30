@@ -10,7 +10,7 @@ public class DialoguePlayer : MonoBehaviour
     [SerializeField] private NeocortexSmartAgent agent;
     [Header("Ollama Text Components")]
     [SerializeField] private OllamaModelDropdown modelDropdown;
-    [SerializeField, TextArea] private string systemPrompt;
+    [SerializeField, TextArea(2, 10)] private string systemPrompt;
 
     private OllamaRequest request;
 

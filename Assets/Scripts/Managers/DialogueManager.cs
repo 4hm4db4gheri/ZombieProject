@@ -4,12 +4,15 @@ using System;
 [RequireComponent(typeof(DialoguePlayer))]
 public class DialogueManager : MonoBehaviour
 {
+    public static DialogueManager Instance;
+    
     [Tooltip("The dialogue types and their rates to be played \nNOTE: If dialogue types are duplicated, then the first value would be used")]
     [SerializeField] private DialogueList dialogueTypesList;
     private DialoguePlayer dialoguePlayer;
 
     private void Start()
     {
+        Instance = this;
         dialoguePlayer = GetComponent<DialoguePlayer>();
     }
     public void PlayDialogue(DialogueType DialogueType)

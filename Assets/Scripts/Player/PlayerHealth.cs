@@ -121,6 +121,7 @@ public class PlayerHealth : MonoBehaviour, IDamageable
     private void Die()
     {
         isDead = true;
+        DialogueManager.Instance.PlayDialogue(DialogueType.Death);
         OnDeath?.Invoke();
 
         if (debugMode)
